@@ -9,7 +9,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useContext, useEffect } from "react";
 function App() {
-  const ctx = useContext(Context);
+  let ctx = useContext(Context);
   useEffect(() => {
     let user = localStorage.getItem("user");
     user = user ? JSON.parse(user) : null;
@@ -30,6 +30,7 @@ function App() {
         accessLevel: email === "admin@example.com" ? 0 : 1,
       };
       ctx.user = user;
+      console.log(ctx.user);
       localStorage.setItem("user", JSON.stringify(user));
       return true;
     } else {
@@ -42,7 +43,9 @@ function App() {
     localStorage.removeItem("user");
   };
   return (
-    <Context.Provider value={{ user: null, cart: {}, products: [] }}>
+    <Context.Provider
+      value={{ user: null, cart: {}, products: [], logout, login }}
+    >
       <nav
         className="navbar container"
         role="navigation"
